@@ -1,0 +1,90 @@
+{
+  "projectType": "saas",
+  "projectName": "PetCenter",
+  "projectDescription": "PetCenter is an all-in-one online pet care platform offering a product shop, appointment booking for grooming, hotel, daycare, and veterinary services, and an AI-powered contact assistant — all integrated with Supabase and n8n automation.",
+  "theme": "almond",
+  "primaryColor": "#c35a7a",
+  "lightColor": "#071f46",
+  "darkColor": "#7c8c9c",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Manual",
+        "groups": [
+          {
+            "group": "Introducción",
+            "pages": [
+              "docs/introduction",
+              "docs/quickstart"
+            ]
+          },
+          {
+            "group": "Servicios",
+            "pages": [
+              "docs/services/banos-spa",
+              "docs/services/peluqueria",
+              "docs/services/hotel-pet",
+              "docs/services/guarderia-piscina",
+              "docs/services/veterinaria"
+            ]
+          },
+          {
+            "group": "Tienda",
+            "pages": [
+              "docs/shop/catalogo",
+              "docs/shop/carrito-checkout"
+            ]
+          },
+          {
+            "group": "Reservas",
+            "pages": [
+              "docs/reservas/como-reservar",
+              "docs/reservas/precios"
+            ]
+          },
+          {
+            "group": "Configuración",
+            "pages": [
+              "docs/config/supabase",
+              "docs/config/n8n-webhooks"
+            ]
+          },
+          {
+            "group": "Ayuda",
+            "pages": [
+              "docs/help/faq",
+              "docs/help/contacto"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Online pet product shop with categories: Food, Pharmacy, Accessories, and Toys",
+    "Service appointment booking with real-time price estimation",
+    "Hotel Pet & Guardería with check-in/check-out date selection and daily rate calculation",
+    "Grooming & Spa booking with size-based pricing and optional add-ons",
+    "Veterinary appointment scheduling with optional ultrasound add-on",
+    "Shopping cart with localStorage persistence, quantity controls, and free shipping threshold",
+    "Checkout with delivery details and multiple payment methods (cash, bank transfer, QR)",
+    "Supabase-powered product catalog with local fallback products",
+    "n8n webhook automation for orders, reservations, and contact messages",
+    "Koko AI assistant (DeepSeek AI) for answering customer inquiries via email",
+    "Integration configuration panel for API credentials stored securely in localStorage"
+  ],
+  "publicApiSurface": [
+    "fetchProducts() — loads product catalog from Supabase or fallback list",
+    "addToCart(product, quantity) — adds item to localStorage cart",
+    "removeFromCart(productId) — removes item from cart",
+    "updateCartItemQuantity(productId, quantity) — updates item quantity",
+    "clearCart() — empties the cart",
+    "getCart() — retrieves current cart contents",
+    "submitPedido(payload) — POSTs order data to n8n Orders webhook",
+    "submitReserva(payload) — POSTs booking data to n8n Reservations webhook",
+    "submitContacto(payload) — POSTs contact message to n8n Contact/AI webhook",
+    "initSupabase() — initializes Supabase client from localStorage credentials",
+    "getApiConfig() — retrieves saved Supabase URL, key, and webhook URLs from localStorage",
+    "showToast(message, type) — displays a toast notification"
+  ]
+}

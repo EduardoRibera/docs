@@ -1,0 +1,91 @@
+---
+title: "Carrito de compras y pago en PetCenter"
+sidebarTitle: "Carrito"
+description: "Aprende a gestionar tu carrito, revisar el resumen de tu pedido y completar el pago con envío a domicilio en Santa Cruz, Bolivia."
+---
+
+El carrito de compras de PetCenter te permite reunir todos los productos que deseas adquirir, revisar cantidades y precios en un solo lugar, y completar tu pedido en minutos con entrega a domicilio en Santa Cruz, Bolivia. Una vez confirmado el pedido, nuestras automatizaciones se encargan de procesarlo y recibirás una confirmación directamente por WhatsApp y correo electrónico.
+
+<Note>
+  El carrito se guarda automáticamente en el navegador (almacenamiento local). Esto significa que los productos que agregues permanecerán en tu carrito aunque cierres la pestaña o el navegador, y seguirán ahí la próxima vez que visites la tienda desde el mismo dispositivo.
+</Note>
+
+## Agregar productos al carrito
+
+Desde cualquier tarjeta de producto en el [catálogo](/docs/shop/catalogo), haz clic en el botón 🛒 para agregar ese artículo a tu carrito. En ese momento ocurren tres cosas de forma simultánea:
+
+1. El producto queda registrado en tu carrito con cantidad 1.
+2. Aparece una notificación de confirmación en pantalla.
+3. El **contador del carrito** (visible junto al ícono 🛒 en la barra de navegación superior) se actualiza para reflejar el total de unidades acumuladas.
+
+Si agregas el mismo producto más de una vez, la cantidad se incrementa automáticamente en lugar de crear una entrada duplicada.
+
+## Gestionar el carrito
+
+Al acceder al carrito verás una tabla con todos los artículos seleccionados. Cada fila muestra la imagen del producto, su nombre, categoría, precio unitario, cantidad y total por línea.
+
+- **Aumentar cantidad** — haz clic en el botón **＋** junto al artículo.
+- **Reducir cantidad** — haz clic en el botón **−**. La cantidad mínima por producto es 1.
+- **Eliminar un artículo** — haz clic en el ícono 🗑️ al final de la fila; recibirás una confirmación en pantalla de que el producto fue eliminado.
+
+## Resumen de la compra
+
+El panel lateral derecho muestra el desglose económico de tu pedido:
+
+| Concepto | Detalle |
+|---|---|
+| **Subtotal** | Suma de (precio unitario × cantidad) de todos los productos. |
+| **Costo de delivery** | Bs. 15 fijos, o **Gratis** si el subtotal supera Bs. 200. |
+| **Total** | Subtotal + costo de delivery. |
+
+<Tip>
+  ¡Aprovecha el envío gratis! Si tu subtotal se acerca a **Bs. 200**, agregar un producto adicional puede eliminar el costo de delivery de Bs. 15 y ahorrarás dinero en el total.
+</Tip>
+
+## Proceso de pago (checkout)
+
+<Steps>
+  <Step title="Revisa tu carrito">
+    Asegúrate de que todos los productos, cantidades y precios sean correctos antes de continuar. Puedes modificar cantidades o eliminar artículos en cualquier momento desde la tabla del carrito.
+  </Step>
+
+  <Step title="Completa el formulario de entrega">
+    Rellena el formulario **"Datos de Entrega"** con la siguiente información:
+
+    - **Nombre Completo** *(obligatorio)* — tu nombre y apellido tal como deseas aparecer en el pedido.
+    - **Correo Electrónico** *(obligatorio)* — dirección donde recibirás la confirmación del pedido.
+    - **Número de WhatsApp** *(obligatorio)* — número boliviano de 8 dígitos al que se enviará el aviso de confirmación y seguimiento.
+    - **Dirección de Entrega** *(obligatorio)* — incluye avenida, calle, número de casa o departamento y cualquier referencia útil (ej.: "Av. Cristo Redentor, Calle 3 N°45, portón azul").
+    - **Método de Pago** *(obligatorio)* — selecciona una de las tres opciones disponibles (ver sección siguiente).
+    - **Instrucciones Adicionales** *(opcional)* — indicaciones especiales para el repartidor, como horarios preferidos o puntos de referencia.
+  </Step>
+
+  <Step title="Elige tu método de pago">
+    PetCenter acepta tres métodos de pago:
+
+    - **Efectivo al Recibir** — pagas en efectivo al momento de recibir tu pedido en la puerta de tu domicilio.
+    - **Transferencia Bancaria** — realizas una transferencia previa y nos envías el comprobante por WhatsApp antes del despacho.
+    - **Pago Simple QR** — escaneás el código QR presentado por el repartidor y pagas al instante desde cualquier billetera digital compatible con la red Pago Simple de Bolivia.
+  </Step>
+
+  <Step title="Confirma el pedido">
+    Haz clic en el botón **"Confirmar Pedido"**. El sistema enviará automáticamente los datos del pedido a nuestro servidor a través del webhook de n8n. Verás un indicador de procesamiento mientras se realiza el envío.
+  </Step>
+
+  <Step title="Recibe la confirmación">
+    Si el pedido se procesa correctamente, la pantalla mostrará el mensaje **"¡Muchas gracias por tu pedido!"** y el carrito quedará vacío. En paralelo, recibirás:
+
+    - Un mensaje de **WhatsApp** al número que ingresaste, con el resumen del pedido y los próximos pasos.
+    - Un **correo electrónico** de confirmación en la dirección que proporcionaste.
+
+    Nuestro equipo comenzará a preparar tu pedido de inmediato y te contactará si necesita confirmar algún detalle de la entrega.
+  </Step>
+</Steps>
+
+## Carrito vacío
+
+Si accedes al carrito sin haber agregado ningún producto, verás el estado **"Tu carrito está vacío"** con un enlace directo de regreso al catálogo. Puedes volver a explorar la tienda en cualquier momento desde el botón **"Volver a la Tienda"**.
+
+---
+
+¿Tuviste un problema al confirmar tu pedido? Consulta nuestra página de [preguntas frecuentes](/docs/help/faq) o contáctanos directamente desde [contacto](/docs/help/contacto). Para conocer la integración técnica del flujo de pedidos, revisa la guía de [webhooks n8n](/docs/config/n8n-webhooks).

@@ -1,0 +1,88 @@
+---
+title: "Cómo hacer una reserva de servicio en PetCenter"
+sidebarTitle: "Cómo Reservar"
+description: "Aprende a agendar cualquier servicio para tu mascota en PetCenter: selecciona el servicio, completa tus datos y recibe confirmación por WhatsApp."
+---
+
+El sistema de reservas de PetCenter te permite agendar con anticipación cualquier servicio — desde un baño y spa hasta una consulta veterinaria — de forma sencilla y completamente en línea. Durante todo el proceso verás una estimación del precio en tiempo real en el panel lateral, para que sepas exactamente cuánto costará antes de confirmar tu cita.
+
+<Steps>
+  <Step title="Selecciona el servicio">
+    Al ingresar a la página de reservas verás cinco tarjetas de servicio: **Baños & Spa**, **Peluquería**, **Hotel Pet**, **Guardería** y **Veterinaria**. Haz clic en la que necesites para activarla; el formulario se adaptará automáticamente según el servicio elegido.
+
+    <Tip>
+      Si haces clic en el botón **"Reservar"** desde la tarjeta de cualquier servicio en la página principal, llegarás al formulario con ese servicio ya preseleccionado. También puedes acceder directamente mediante los siguientes enlaces rápidos:
+      - Baños & Spa → `reservas.html?servicio=banos`
+      - Peluquería → `reservas.html?servicio=peluqueria`
+      - Hotel Pet → `reservas.html?servicio=hotel`
+      - Guardería → `reservas.html?servicio=guarderia`
+      - Veterinaria → `reservas.html?servicio=veterinaria`
+    </Tip>
+  </Step>
+
+  <Step title="Completa tus datos personales y los de tu mascota">
+    Rellena los siguientes campos obligatorios:
+
+    | Campo | Descripción |
+    |---|---|
+    | **Nombre Completo** | Tu nombre completo como titular de la reserva |
+    | **Correo Electrónico** | Dirección de email para recibir la confirmación |
+    | **Número de WhatsApp** | Número activo para recibir notificaciones (ej. 70000000) |
+    | **Nombre de tu Mascota** | El nombre de la mascota que recibirá el servicio |
+    | **Tipo de Mascota** | Selecciona **Perro** o **Gato** según corresponda |
+
+    La elección entre perro y gato puede afectar la tarifa (por ejemplo, en el Hotel Pet) y habilitará o deshabilitará el selector de tamaño en los servicios de baño y peluquería.
+  </Step>
+
+  <Step title="Elige la fecha y los detalles del turno">
+    Los campos disponibles en esta sección varían según el servicio seleccionado:
+
+    **Baños & Spa / Peluquería Canina**
+    - Selecciona la **fecha** de la cita.
+    - Elige un **horario** disponible: 09:00, 10:30, 12:00, 14:30, 16:00 o 17:30.
+    - Indica el **tamaño/peso** de tu perro (aplica solo para perros; ver tabla de recargos en [Precios y Tarifas](/docs/reservas/precios)).
+    - Agrega opcionales: **Baño Medicado** (+Bs. 20) o **Estilismo VIP & Perfumado** (+Bs. 30).
+
+    **Hotel Pet / Guardería & Piscina**
+    - Selecciona la **fecha de ingreso (check-in)** y la **fecha de salida (check-out)**.
+    - El sistema calculará automáticamente la cantidad de días y actualizará la estimación de precio.
+    - En la Guardería puedes agregar el opcional **Acceso a Piscina Recreativa** (+Bs. 20/día).
+
+    **Veterinaria**
+    - Selecciona la **fecha** de la consulta.
+    - Elige un **horario** disponible: 09:00, 10:30, 12:00, 14:30, 16:00 o 17:30.
+    - Opcionalmente, marca **Agregar Ecografía** (+Bs. 70) si tu mascota la necesita.
+
+    En todos los servicios encontrarás el campo **Notas Especiales o Alergias**, donde puedes indicar cualquier requerimiento particular de tu mascota — por ejemplo, si es nerviosa con el secador, tiene alergia a algún shampoo o requiere cuidados especiales durante su estadía.
+  </Step>
+
+  <Step title="Revisa el resumen y la estimación de precio">
+    Mientras completas el formulario, el panel lateral derecho (**Resumen de Reserva**) se actualiza en tiempo real mostrando:
+
+    - El **servicio** seleccionado.
+    - El **nombre y tipo** de tu mascota.
+    - La **fecha/hora** o el rango de días.
+    - Los **adicionales** activados.
+    - El **Precio Estimado** total en bolivianos (Bs.).
+
+    Revisa este resumen antes de continuar para asegurarte de que todos los datos sean correctos.
+  </Step>
+
+  <Step title="Confirma la reserva">
+    Cuando estés conforme con los datos y la estimación, haz clic en el botón **"📅 Confirmar Reserva de Cita"**. El sistema enviará automáticamente tu solicitud al equipo de PetCenter a través del webhook de n8n para su revisión y aprobación.
+
+    <Note>
+      Al confirmar, estás enviando una **solicitud de reserva**, no una cita garantizada de inmediato. El equipo de PetCenter revisará la disponibilidad y te notificará una vez que tu reserva haya sido aprobada y confirmada.
+    </Note>
+  </Step>
+
+  <Step title="Recibe tu confirmación">
+    Una vez que el equipo de PetCenter apruebe tu solicitud, recibirás una notificación de confirmación por **WhatsApp** y/o **correo electrónico** con todos los detalles de tu cita: servicio, fecha, hora y precio final.
+
+    Si tienes alguna duda sobre tu reserva o necesitas modificarla, puedes contactarnos directamente a través de los canales indicados en [Contacto](/docs/help/contacto).
+  </Step>
+</Steps>
+
+---
+
+¿Tienes preguntas sobre tarifas o adicionales? Consulta la página de [Precios y Tarifas](/docs/reservas/precios) para ver el detalle completo de todos los costos por servicio.

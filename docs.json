@@ -1,72 +1,69 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mintlify Starter Kit",
-  "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "PetCenter",
+  "theme": "almond",
+  "logo": {
+    "light": "https://media.brand.dev/1ba74120-4578-4605-a908-4aa3a13327e2.svg",
+    "dark": "https://media.brand.dev/1ba74120-4578-4605-a908-4aa3a13327e2.svg"
   },
   "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#c35a7a",
+    "light": "#071f46",
+    "dark": "#7c8c9c"
+  },
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "tab": "Manual",
+        "groups": [
+          {
+            "group": "Introducción",
+            "pages": [
+              "docs/introduction",
+              "docs/quickstart"
+            ]
+          },
+          {
+            "group": "Servicios",
+            "pages": [
+              "docs/services/banos-spa",
+              "docs/services/peluqueria",
+              "docs/services/hotel-pet",
+              "docs/services/guarderia-piscina",
+              "docs/services/veterinaria"
+            ]
+          },
+          {
+            "group": "Tienda",
+            "pages": [
+              "docs/shop/catalogo",
+              "docs/shop/carrito-checkout"
+            ]
+          },
+          {
+            "group": "Reservas",
+            "pages": [
+              "docs/reservas/como-reservar",
+              "docs/reservas/precios"
+            ]
+          },
+          {
+            "group": "Configuración",
+            "pages": [
+              "docs/config/supabase",
+              "docs/config/n8n-webhooks"
+            ]
+          },
+          {
+            "group": "Ayuda",
+            "pages": [
+              "docs/help/faq",
+              "docs/help/contacto"
+            ]
+          }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
     ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
   }
 }

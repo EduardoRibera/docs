@@ -1,0 +1,120 @@
+---
+title: "Conectar Supabase al catálogo de productos PetCenter"
+sidebarTitle: "Supabase"
+description: "Conecta tu proyecto Supabase para gestionar el catálogo de productos en tiempo real desde el panel de configuración de PetCenter."
+---
+
+Supabase actúa como la base de datos en la nube de PetCenter: almacena todos tus productos y los sirve en tiempo real a la tienda. Una vez configurado, cualquier cambio que hagas directamente en la tabla `productos` de Supabase se reflejará de inmediato en el Pet Shop sin necesidad de redesplegar el sitio. Si aún no has configurado Supabase, la tienda cargará automáticamente un conjunto de **8 productos de muestra** (productos de fallback definidos en `supabase-n8n.js`) para que el sitio siga siendo funcional, pero no reflejarán tu inventario real.
+
+## ¿Qué necesitas?
+
+- Una cuenta gratuita en [supabase.com](https://supabase.com)
+- Acceso al **Panel de Configuración** de PetCenter (botón ⚙️ Config en el encabezado del sitio)
+
+---
+
+## Paso a paso
+
+<Steps>
+
+### Crea un proyecto en Supabase
+
+Inicia sesión en [supabase.com](https://supabase.com), haz clic en **New project** y completa el nombre, la contraseña de base de datos y la región. Espera a que el proyecto termine de aprovisionarse (suele tardar entre 1 y 2 minutos).
+
+### Crea la tabla `productos`
+
+En el panel de Supabase, ve a **Table Editor** → **New table** y crea la tabla con la siguiente estructura. También puedes ejecutar el script SQL directamente desde **SQL Editor**:
+
+```sql
+CREATE TABLE productos (
+  id          TEXT PRIMARY KEY,
+  nombre      TEXT        NOT NULL,
+  descripcion TEXT,
+  precio      NUMERIC     NOT NULL,
+  imagen_url  TEXT,
+  categoria   TEXT,
+  animal      TEXT,
+  marca       TEXT,
+  stock       INTEGER     DEFAULT 0
+);
+```
+
+Carga tus productos como filas en esta tabla. El campo `id` puede ser un UUID o cualquier texto único por producto. El campo `imagen_url` debe contener una URL pública de la imagen (por ejemplo, de Unsplash o de tu propio bucket de Supabase Storage).
+
+### Copia tus credenciales de API
+
+En el panel de Supabase, navega a **Settings → API**. Ahí encontrarás dos valores que necesitas:
+
+- **Project URL** — tiene la forma `https://xxxxxx.supabase.co`
+- **anon / public key** — un token JWT que empieza con `eyJ...`
+
+Copia ambos valores; los necesitarás en el siguiente paso.
+
+<Note>
+La **Anon Key** es la clave pública de tu proyecto. Está diseñada para usarse desde el navegador y solo tiene los permisos que tú definas en las políticas de Row Level Security (RLS) de Supabase. Es seguro incluirla en el frontend.
+</Note>
+
+<Warning>
+Nunca uses la clave **service_role** en el frontend. Esa clave omite todas las políticas de seguridad (RLS) y otorga acceso administrativo completo a tu base de datos. Úsala únicamente en entornos de servidor o en flujos privados de n8n.
+</Warning>
+
+### Abre el Panel de Configuración de PetCenter
+
+En el sitio PetCenter, haz clic en el botón **⚙️ Config** que aparece en la esquina superior derecha del encabezado. Esto abrirá `config.html`, el panel de integración.
+
+### Introduce la URL y la Anon Key
+
+En el formulario **Ajustes de Credenciales**, pega los valores copiados de Supabase:
+
+- **Supabase URL:** `https://xxxxxx.supabase.co`
+- **Supabase Anon Key:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
+
+### Guarda las credenciales
+
+Haz clic en el botón **💾 Guardar Credenciales**. Los valores se almacenan en el `localStorage` de tu navegador bajo las claves `petshop_supabase_url` y `petshop_supabase_key`. Verás un mensaje de confirmación en pantalla.
+
+<Note>
+Las credenciales se guardan **únicamente en el almacenamiento local de tu navegador**, nunca en el código fuente ni en el repositorio de GitHub. Esto significa que cada administrador debe introducirlas una sola vez en su propio navegador. Si despejas el caché o cambias de navegador, deberás volver a introducirlas.
+</Note>
+
+### Prueba la conexión
+
+Haz clic en el botón **⚡ Probar Supabase**. El sistema intentará leer la tabla `productos` con una consulta de recuento. Si la conexión es exitosa, verás el mensaje:
+
+> ✅ Conexión con Supabase Exitosa! Tabla "productos" leída.
+
+Si aparece un error, revisa que la URL y la Anon Key sean correctas y que la tabla `productos` exista en tu proyecto.
+
+</Steps>
+
+---
+
+## Indicadores de estado
+
+En la parte inferior del Panel de Configuración encontrarás el indicador **Estado de Supabase**. Su comportamiento es el siguiente:
+
+| Insignia | Color | Significado |
+|---|---|---|
+| **Configurado** | Verde | URL y Anon Key están presentes en localStorage |
+| **Falta Configurar** | Rojo | Uno o ambos campos están vacíos |
+
+El indicador se actualiza automáticamente cada vez que guardas las credenciales. Para forzar una verificación real de la conexión (no solo la presencia de los valores), usa siempre el botón **⚡ Probar Supabase**.
+
+---
+
+## Comportamiento de la tienda según el estado de Supabase
+
+| Estado | Comportamiento en el Pet Shop |
+|---|---|
+| Supabase **configurado y conectado** | La tienda carga los productos desde tu tabla `productos` en tiempo real |
+| Supabase **no configurado o con error** | La tienda muestra los 8 productos de muestra predefinidos en `supabase-n8n.js` |
+
+Si quieres verificar que la tienda está leyendo datos reales, agrega un producto nuevo en Supabase y recarga el Pet Shop: debería aparecer de inmediato.
+
+---
+
+## Páginas relacionadas
+
+- [Catálogo de productos](/docs/shop/catalogo) — cómo se muestra el inventario en la tienda
+- [Carrito y checkout](/docs/shop/carrito-checkout) — proceso de compra
+- [Configurar webhooks n8n](/docs/config/n8n-webhooks) — automatización de pedidos y reservas

@@ -1,0 +1,166 @@
+---
+title: "Configurar webhooks n8n para automatización PetCenter"
+sidebarTitle: "Webhooks n8n"
+description: "Conecta n8n a PetCenter mediante tres webhooks para automatizar notificaciones de pedidos, reservas de servicios y respuestas del chat Koko AI."
+---
+
+n8n es la plataforma de automatización que convierte cada acción importante de tus clientes en un flujo de trabajo inteligente: un pedido confirmado puede disparar un correo al cliente y una alerta interna; una reserva puede actualizar tu calendario; un mensaje al chat puede generar una respuesta personalizada con inteligencia artificial. PetCenter se integra con n8n a través de **tres webhooks independientes**, uno por cada tipo de evento. Puedes configurar solo los que necesites: cada webhook es opcional, pero si un evento ocurre sin su webhook configurado, el sistema mostrará un error al cliente en lugar de procesar la acción.
+
+## Los tres webhooks de PetCenter
+
+### 1. Webhook Pedidos
+
+Se dispara cuando un cliente completa una compra en el Pet Shop y confirma el checkout. Úsalo para enviar confirmaciones por correo, notificar a tu equipo de despacho o registrar el pedido en una hoja de cálculo.
+
+**Payload enviado:**
+
+```json
+{
+  "cliente_nombre": "María Torres",
+  "cliente_email": "maria@ejemplo.com",
+  "cliente_telefono": "+591 70000001",
+  "cliente_direccion": "Av. Cañoto #456, Santa Cruz",
+  "metodo_pago": "Transferencia Bancaria",
+  "notas": "Entregar en horario de mañana",
+  "items": [
+    {
+      "id": "f4",
+      "nombre": "PRO PLAN ADULT COMPLET X 15 KG",
+      "precio": 480.00,
+      "cantidad": 1
+    },
+    {
+      "id": "f7",
+      "nombre": "ARENA CANADA LITTER 12 KG. LAVANDER",
+      "precio": 130.00,
+      "cantidad": 2
+    }
+  ],
+  "total": 740.00
+}
+```
+
+### 2. Webhook Reservas
+
+Se dispara cuando un cliente envía el formulario de reserva de cualquier servicio (Baños & Spa, Peluquería, Hotel Pet, Guardería & Piscina o Veterinaria). Úsalo para registrar la cita, enviar confirmación al cliente y notificar al equipo de servicios.
+
+**Payload enviado:**
+
+```json
+{
+  "cliente_nombre": "Carlos Méndez",
+  "cliente_email": "carlos@ejemplo.com",
+  "cliente_telefono": "+591 70000002",
+  "mascota_name": "Luna",
+  "mascota_tipo": "Perro",
+  "servicio": "Baños & Spa",
+  "fecha_inicio": "2026-07-15",
+  "fecha_fin": "2026-07-15",
+  "hora": "10:00",
+  "detalles": {
+    "tamano": "Mediano",
+    "addons": ["Corte de uñas", "Perfume premium"],
+    "notas": "Luna es algo tímida con extraños"
+  },
+  "precio_estimado": 120.00
+}
+```
+
+### 3. Webhook Contacto
+
+Se dispara cuando un cliente envía un mensaje a través del formulario del asistente virtual Koko. Este webhook está diseñado para enrutar el mensaje a **DeepSeek AI** (u otro modelo de lenguaje) dentro de tu flujo de n8n, generar una respuesta personalizada y enviarla por correo electrónico al cliente.
+
+**Payload enviado:**
+
+```json
+{
+  "nombre": "Ana Rodríguez",
+  "email": "ana@ejemplo.com",
+  "asunto": "Consulta sobre el servicio de hotel",
+  "mensaje": "Hola, quisiera saber si aceptan perros de raza grande para el Hotel Pet durante las fiestas de fin de año."
+}
+```
+
+---
+
+## Configurar los webhooks
+
+<Steps>
+
+### Crea un workflow en n8n
+
+En tu instancia de n8n, crea un nuevo workflow y agrégale un nodo **Webhook** como nodo disparador (trigger). Configúralo con el método **POST** y activa el workflow.
+
+<Tip>
+Antes de pegar la URL en PetCenter, activa el modo de **prueba** del webhook en n8n (botón "Listen for test event"). Esto te permite ver el payload real que envía PetCenter y construir el resto del flujo con datos reales sin necesidad de tener todo listo de antemano.
+</Tip>
+
+### Copia la URL del webhook
+
+n8n generará una URL con la forma:
+
+```
+https://n8n.tudominio.com/webhook/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+```
+
+Cópiala. Deberás repetir este proceso para cada uno de los tres webhooks (Pedidos, Reservas, Contacto), ya que cada uno corresponde a un workflow distinto en n8n.
+
+### Abre el Panel de Configuración de PetCenter
+
+En el sitio PetCenter, haz clic en el botón **⚙️ Config** en la esquina superior derecha del encabezado para acceder a `config.html`.
+
+### Pega la URL en el campo correspondiente
+
+En la sección **Webhooks de n8n**, encontrarás tres campos:
+
+- **Webhook Pedidos (Shop):** pega la URL del workflow de pedidos
+- **Webhook Reservas (Servicios):** pega la URL del workflow de reservas
+- **Webhook Contacto (IA):** pega la URL del workflow de Koko / DeepSeek
+
+No estás obligado a rellenar los tres a la vez. Puedes configurarlos de forma gradual según vayas construyendo tus flujos de n8n.
+
+### Guarda las credenciales
+
+Haz clic en **💾 Guardar Credenciales**. Las URLs se almacenan en el `localStorage` del navegador bajo las claves `petshop_webhook_pedidos`, `petshop_webhook_reservas` y `petshop_webhook_contacto`. Verás un mensaje de confirmación en pantalla.
+
+</Steps>
+
+<Note>
+Los webhooks son **totalmente opcionales**. El sitio funciona con normalidad sin ellos: los clientes pueden navegar el catálogo y ver los servicios. Sin embargo, si un cliente intenta completar un pedido o enviar una reserva y el webhook correspondiente no está configurado, PetCenter mostrará un mensaje de error indicando que el webhook no está disponible y la acción no se procesará.
+</Note>
+
+---
+
+## Indicador de estado de n8n
+
+En la parte inferior del Panel de Configuración encontrarás el indicador **Estado de n8n**:
+
+| Insignia | Color | Significado |
+|---|---|---|
+| **Activo** | Verde | Al menos uno de los tres webhooks tiene una URL configurada |
+| **Faltan Webhooks** | Rojo | Los tres campos de webhook están vacíos |
+
+El indicador no verifica que las URLs sean válidas ni que los flujos de n8n estén activos; solo confirma que hay valores guardados. Para una verificación real, envía un pedido o reserva de prueba y comprueba que n8n lo recibe.
+
+---
+
+## Recomendaciones para el flujo del Webhook Contacto
+
+El Webhook Contacto está pensado para conectarse con un modelo de lenguaje como **DeepSeek AI** y generar respuestas automáticas personalizadas. Un flujo típico en n8n para este webhook sería:
+
+1. **Nodo Webhook** — recibe el payload con `nombre`, `email`, `asunto` y `mensaje`
+2. **Nodo HTTP Request** — llama a la API de DeepSeek con el mensaje del cliente como prompt
+3. **Nodo Send Email** — envía la respuesta generada al correo del cliente (`email`)
+
+<Tip>
+En el prompt de DeepSeek, incluye contexto sobre PetCenter (nombre, ubicación en Santa Cruz, Bolivia, servicios disponibles) para que las respuestas sean coherentes con tu marca. Por ejemplo: *"Eres Koko, el asistente virtual de PetCenter Santa Cruz. Responde de forma amable y profesional al siguiente mensaje de cliente..."*
+</Tip>
+
+---
+
+## Páginas relacionadas
+
+- [Conectar Supabase](/docs/config/supabase) — configuración de la base de datos de productos
+- [Carrito y checkout](/docs/shop/carrito-checkout) — proceso de compra que dispara el Webhook Pedidos
+- [Cómo reservar](/docs/reservas/como-reservar) — formulario que dispara el Webhook Reservas
+- [Precios de servicios](/docs/reservas/precios) — tarifas incluidas en el payload de reservas
